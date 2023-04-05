@@ -22,26 +22,25 @@ public class SupplierServiceIMPL implements SupplierService {
 
 	@Override
 	public boolean updateSupplier(Supplier supplier) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isUpdated = dao.updateSupplier(supplier);
+		return isUpdated;
 	}
 
 	@Override
 	public boolean deleteSupplier(int supplierId) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isDeleted = dao.deleteSupplier(supplierId);
+		return isDeleted;
 	}
 
 	@Override
 	public Supplier getSupplierById(int supplierId) {
-		// TODO Auto-generated method stub
-		return null;
+		Supplier supplier = dao.getSupplierById(supplierId);
+		return supplier;
 	}
 
 	@Override
 	public List<Supplier> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getAllSupplier();
 	}
 
 }
