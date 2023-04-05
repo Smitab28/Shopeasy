@@ -40,26 +40,85 @@ public class SupplierDaoIMPL implements SupplierDao {
 
 	@Override
 	public boolean updateSupplier(Supplier supplier) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session = null;
+		boolean isUpdated = false;
+		try {
+				session = sf.openSession();
+				Criteria criteria = session.createCriteria(Supplier.class);
+				Transaction transaction = session.beginTransaction();
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return isUpdated;
 	}
 
 	@Override
 	public boolean deleteSupplier(int supplierId) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session = null;
+		boolean isDeleted = false;
+		try {
+			session = sf.openSession();
+			Transaction transaction = session.beginTransaction();
+
+			Supplier supplier = getSupplierById(supplierId);
+			if (supplier != null) {
+				session.delete(supplier);
+				transaction.commit();
+				isDeleted = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return isDeleted;
 	}
 
 	@Override
 	public Supplier getSupplierById(int supplierId) {
-		// TODO Auto-generated method stub
-		return null;
+		Supplier supplier = null;
+		Session session = null;
+		try {
+			session = sf.openSession();
+
+			supplier = session.get(Supplier.class, supplierId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+		return supplier;
 	}
 
 	@Override
 	public List<Supplier> getAllSupplier() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<Supplier> list = null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Supplier.class);
+			list = criteria.list();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		return list;
 	}
 
 }
