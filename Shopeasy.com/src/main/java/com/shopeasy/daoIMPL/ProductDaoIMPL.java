@@ -58,7 +58,11 @@ public class ProductDaoIMPL implements ProductDao {
 				session = sf.openSession();
 				Criteria criteria = session.createCriteria(Product.class);
 				Transaction transaction = session.beginTransaction();
-				
+				List<Product> list = criteria.list();
+				Product UnupdatedProduct = getSingleProductById(product.getProductId());
+				int index = list.indexOf(UnupdatedProduct);
+				list.set(index, product);
+				isUpdated = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -78,7 +82,7 @@ public class ProductDaoIMPL implements ProductDao {
 				Criteria criteria = session.createCriteria(Product.class);
 				list = criteria.list();
 				for (Product product : list) {
-					if(product.productId.equals(productId))
+					if(product.getProductId().equals(productId))
 						return product;
 				}
 		}
