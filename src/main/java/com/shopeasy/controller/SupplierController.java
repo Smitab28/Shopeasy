@@ -47,7 +47,7 @@ public class SupplierController {
 		if(isDeleted) {
 			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.CREATED);
 		}else {
-			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -55,15 +55,15 @@ public class SupplierController {
 	public ResponseEntity<Supplier> getSupplierById(@RequestParam int supplierId){
 		Supplier supplier = service.getSupplierById(supplierId);
 		if(supplier!=null) {
-			return new ResponseEntity<Supplier>(supplier, HttpStatus.ACCEPTED);
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.FOUND);
 		}else {
-			return new ResponseEntity<Supplier>(supplier, HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping("get-all-supplier")
 	public ResponseEntity<List<Supplier>> getAllSupplier(){
 		list = service.getAllSupplier();
-		return new ResponseEntity<List<Supplier>>(list, HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<Supplier>>(list, HttpStatus.FOUND);
 	}
 }
