@@ -22,26 +22,27 @@ public class CategoryServiceIMPL implements CategoryService {
 
 	@Override
 	public boolean updateCategory(Category category) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isUpdated = dao.updateCategory(category);
+		return isUpdated;
 	}
 
 	@Override
 	public boolean deleteCategory(int categoryId) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isDeleted = dao.deleteCategory(categoryId);
+		return isDeleted;
 	}
 
 	@Override
 	public Category getCategorybyId(int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+		Category category = dao.getCategorybyId(categoryId);
+		return category;
 	}
 
 	@Override
 	public List<Category> getAllCategory() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Category> list = dao.getAllCategory();
+		return list;
 	}
 
 }
+
