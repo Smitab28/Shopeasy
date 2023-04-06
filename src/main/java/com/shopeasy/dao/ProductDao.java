@@ -11,11 +11,11 @@ public interface ProductDao {
 	public boolean updateProduct(Product product);
 	public Product getSingleProductById(String productId);
 	public List<Product> getAllProduct();
-	public boolean deleteProduct();
+	public boolean deleteProduct(String productId);
 	public int getCountOfTotalProduct();
 	public double sumOfProductPrice();
 	public List<Product> sortProductById_ASC();
-	public List<Product> sortProductById_DESC();
+	public List<Product> sortProductByName_DESC();
 	public Product getMaxPriceProduct();
 	public Product getMinPriceProduct();
 	

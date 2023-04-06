@@ -1,5 +1,6 @@
 package com.shopeasy.daoIMPL;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -8,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,7 +59,11 @@ public class ProductDaoIMPL implements ProductDao {
 				session = sf.openSession();
 				Criteria criteria = session.createCriteria(Product.class);
 				Transaction transaction = session.beginTransaction();
-				
+				List<Product> list = criteria.list();
+				Product unupdatedProduct =  getSingleProductById(product.getProductId());
+				int index = list.indexOf(unupdatedProduct);
+				list.set(index, product);
+				isUpdated = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -109,45 +115,123 @@ public class ProductDaoIMPL implements ProductDao {
 	}
 
 	@Override
-	public boolean deleteProduct() {
-		// TODO Auto-generated method stub
+	public boolean deleteProduct(String productId) {
+		boolean isDeleted =false;
+		Session session = null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 
 	@Override
 	public int getCountOfTotalProduct() {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = null;
+		int count =0;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			count = criteria.list().size();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return count;
 	}
 
 	@Override
 	public double sumOfProductPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		Session session = null;
+		double sum=0;
+		try {
+			session =sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			List<Product> list = criteria.list();
+			for (Product product : list) {
+				sum += product.getProductPrice();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sum;
 	}
 
 	@Override
 	public List<Product> sortProductById_ASC() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = null;
+		List<Product> list = null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			list = criteria.list();
+			list  = (List<Product>) list.stream().sorted();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
 	}
 
 	@Override
-	public List<Product> sortProductById_DESC() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> sortProductByName_DESC() {
+		Session session = null;
+		List<Product> list = null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			list  = (List<Product>) criteria.addOrder(Order.desc("productName"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return list;
 	}
 
 	@Override
 	public Product getMaxPriceProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =null;
+		Product product =null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			List<Product> list = criteria.list();
+		    product = list.stream().max(Comparator.comparingDouble(val -> val.getProductPrice())).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return product;
 	}
 
 	@Override
 	public Product getMinPriceProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =null;
+		Product product =null;
+		try {
+			session = sf.openSession();
+			Criteria criteria = session.createCriteria(Product.class);
+			List<Product> list = criteria.list();
+		    product = list.stream().min(Comparator.comparingDouble(val -> val.getProductPrice())).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+				session.close();
+		}
+		return product;
 	}
 
 }
