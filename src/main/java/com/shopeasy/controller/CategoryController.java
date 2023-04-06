@@ -19,7 +19,7 @@ import com.shopeasy.entity.Product;
 import com.shopeasy.service.CategoryService;
 
 @Controller
-@RequestMapping("/shopeasy")
+@RequestMapping("/category")
 public class CategoryController {
 
 	@Autowired
@@ -38,33 +38,36 @@ public class CategoryController {
 	public ResponseEntity<Boolean> updateCategory(@RequestBody Category category){
 		boolean isUpdated = service.updateCategory(category);
 		if(isUpdated)
-			return new ResponseEntity<>(isUpdated, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(isUpdated, HttpStatus.OK);
 		else
-			return new ResponseEntity<>(isUpdated, HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<>(isUpdated, HttpStatus.NO_CONTENT);
 	}
 	
-	@DeleteMapping("/delete-category{/categoryId}")
+	@DeleteMapping("/delete-category/{categoryId}")
 	public ResponseEntity<Boolean> deleteCategory(@PathVariable int categoryId){
 		boolean isDeleted = service.deleteCategory(categoryId);
 		if(isDeleted) {
-			return new ResponseEntity<>(isDeleted, HttpStatus.FOUND);
+			return new ResponseEntity<>(isDeleted, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(isDeleted, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(isDeleted, HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/get-singlecategory/{categorytId}")
 	public ResponseEntity<Category> getSingleProductById(@PathVariable int categoryId){
 		Category category = service.getCategorybyId(categoryId);
 		if(category!=null) {
-			return new ResponseEntity<>(category, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(category, HttpStatus.OK);
 		}
 		else
-			return new ResponseEntity<>(category, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(category, HttpStatus.NO_CONTENT);
 	}
 	
 	@GetMapping("/get-all-catgory")
 	public ResponseEntity<List<Category>> getAllCategory(){
 		List<Category> list = service.getAllCategory();
-		return new ResponseEntity<List<Category>>(list, HttpStatus.NOT_FOUND);
+		if(list.isEmpty())
+			return new ResponseEntity<List<Category>>( HttpStatus.NO_CONTENT);
+		else
+			return new ResponseEntity<List<Category>>(list , HttpStatus.OK);
 	}
 }

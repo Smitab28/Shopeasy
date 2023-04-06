@@ -27,14 +27,12 @@ public class ProductServiceIMPL implements ProductService {
 
 	@Override
 	public boolean saveMultipleProduct(List<Product> list) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.saveMultipleProduct(list);
 	}
 
 	@Override
 	public boolean updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.updateProduct(product);
 	}
 
 	@Override
@@ -50,45 +48,38 @@ public class ProductServiceIMPL implements ProductService {
 	}
 
 	@Override
-	public boolean deleteProduct() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteProduct(String productId) {
+		return dao.deleteProduct(productId);
 	}
 
 	@Override
 	public int getCountOfTotalProduct() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.getCountOfTotalProduct();
 	}
 
 	@Override
 	public double sumOfProductPrice() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.sumOfProductPrice();
 	}
 
 	@Override
 	public List<Product> sortProductById_ASC() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.sortProductById_ASC();
 	}
 
 	@Override
-	public List<Product> sortProductById_DESC() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> sortProductByName_DESC() {
+		return dao.sortProductByName_DESC();
 	}
 
 	@Override
 	public Product getMaxPriceProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getMaxPriceProduct();
 	}
 
 	@Override
 	public Product getMinPriceProduct() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getMinPriceProduct();
 	}
 
 	
