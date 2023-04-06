@@ -35,9 +35,9 @@ public class SupplierController {
 	public ResponseEntity<Boolean> updateSupplier(@RequestBody Supplier supplier){
 		boolean isUpdated = service.updateSupplier(supplier);
 		if(isUpdated) {
-			return new ResponseEntity<Boolean>(isUpdated, HttpStatus.CREATED);
+			return new ResponseEntity<Boolean>(isUpdated, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Boolean>(isUpdated, HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<Boolean>(isUpdated, HttpStatus.NO_CONTENT);
 		}
 	}
 	
@@ -45,9 +45,9 @@ public class SupplierController {
 	public ResponseEntity<Boolean> deleteSupplier(@RequestParam int supplierId){
 		boolean isDeleted = service.deleteSupplier(supplierId);
 		if(isDeleted) {
-			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.CREATED);
+			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Boolean>(isDeleted, HttpStatus.NO_CONTENT);
 		}
 	}
 	
@@ -55,15 +55,15 @@ public class SupplierController {
 	public ResponseEntity<Supplier> getSupplierById(@RequestParam int supplierId){
 		Supplier supplier = service.getSupplierById(supplierId);
 		if(supplier!=null) {
-			return new ResponseEntity<Supplier>(supplier, HttpStatus.FOUND);
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<Supplier>(supplier, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Supplier>(supplier, HttpStatus.NO_CONTENT);
 		}
 	}
 	
 	@GetMapping("get-all-supplier")
 	public ResponseEntity<List<Supplier>> getAllSupplier(){
 		list = service.getAllSupplier();
-		return new ResponseEntity<List<Supplier>>(list, HttpStatus.FOUND);
+		return new ResponseEntity<List<Supplier>>(list, HttpStatus.OK);
 	}
 }
